@@ -2,9 +2,8 @@
   Clean Architecture Starter Template
 </h1>
 
-
 <p align="center">
-  <img src="https://socialify.git.ci/aheroglu/clean-architecture-starter/image?description=1&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Solid&amp;stargazers=1&amp;theme=Auto"
+  <img src="https://socialify.git.ci/aheroglu/clean-architecture-starter/image?description=1&language=1&name=1&owner=1&pattern=Solid&stargazers=1&theme=Auto"
     alt="project-image">
 </p>
 
