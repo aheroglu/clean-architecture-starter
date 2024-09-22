@@ -7,7 +7,9 @@
     alt="project-image">
 </p>
 
-## This is an starter template for easily start to develop your projects.
+<h2 align="center">
+  This is an starter template for easily start to develop your projects.
+</h2>
 
 ## Table Of Contents
 
