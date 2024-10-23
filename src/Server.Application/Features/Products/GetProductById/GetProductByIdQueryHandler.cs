@@ -14,7 +14,7 @@ public sealed class GetProductByIdQueryHandler(
         Product product = await queryRepository
             .GetByAsync(p => p.Id == request.Id, cancellationToken);
 
-        if (product is null) return new(null, new List<string> { "Product not found!" }, null);
+        if (product is null) return Result<GetProductByIdQueryResponse>.Failure("Product not found!");
 
         return new(
             null,

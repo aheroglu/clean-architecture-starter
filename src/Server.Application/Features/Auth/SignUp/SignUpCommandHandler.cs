@@ -16,13 +16,13 @@ public sealed class SignUpCommandHandler(
             .Users
             .AnyAsync(p => p.UserName == request.UserName, cancellationToken);
 
-        if (isUserNameExists) return new(null, new List<string> { "User name already exists!" }, null);
+        if (isUserNameExists) return Result<SignUpCommandResponse>.Failure("User name already exists!");
 
         bool isEmailExists = await userManager
             .Users
             .AnyAsync(p => p.Email == request.Email, cancellationToken);
 
-        if (isEmailExists) return new(null, new List<string> { "Email already exists!" }, null);
+        if (isEmailExists) return Result<SignUpCommandResponse>.Failure("Email already exists!");
 
         AppUser user = new()
         {
@@ -33,14 +33,10 @@ public sealed class SignUpCommandHandler(
         var result = await userManager
             .CreateAsync(user, request.Password);
 
-        if (result.Errors.Any()) return new(
-            null,
-            result.Errors.Select(p => p.Description).ToList(),
-            null);
+        if (result.Errors.Any()) return Result<SignUpCommandResponse>.Failure(result.Errors.Select(p => p.Description).ToList());
 
-        return new(
+        return Result<SignUpCommandResponse>.Success(
             "User was successfully created",
-            null,
             user.Adapt<SignUpCommandResponse>());
     }
 }

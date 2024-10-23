@@ -16,10 +16,7 @@ public sealed class CreateRoleCommandHandler(
             .Roles
             .AnyAsync(p => p.Name == request.Name, cancellationToken);
 
-        if (isRoleExists) return new(
-            null,
-            new List<string> { "Role already exists!" },
-            null);
+        if (isRoleExists) return Result<CreateRoleCommandResponse>.Failure("Role already exists!");
 
         AppRole role = new()
         {
@@ -29,13 +26,10 @@ public sealed class CreateRoleCommandHandler(
         var result = await roleManager
              .CreateAsync(role);
 
-        if (result.Errors.Any()) return new(null,
-            result.Errors.Select(p => p.Description).ToList(),
-            null);
+        if (result.Errors.Any()) return Result<CreateRoleCommandResponse>.Failure(result.Errors.Select(p => p.Description).ToList());
 
-        return new(
+        return Result<CreateRoleCommandResponse>.Success(
             "Role was successfully created",
-            null,
             role.Adapt<CreateRoleCommandResponse>());
     }
 }

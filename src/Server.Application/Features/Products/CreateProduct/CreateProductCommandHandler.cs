@@ -16,7 +16,7 @@ public sealed class CreateProductCommandHandler(
         bool isNameExists = await productQueryRepository
             .IsProductExistsAsync(request.Name, cancellationToken);
 
-        if (isNameExists) return new(null, new List<string> { "Product name already exists!" }, null);
+        if (isNameExists) return Result<CreateProductCommandResponse>.Failure("Product name already exists!");
 
         Product product = request.Adapt<Product>();
 
@@ -26,9 +26,9 @@ public sealed class CreateProductCommandHandler(
         await unitOfWork
             .SaveChangesAsync(cancellationToken);
 
-        return new(
-            "Product was successfully created",
-            null,
-            product.Adapt<CreateProductCommandResponse>());
+        return Result<CreateProductCommandResponse>.Success(
+                "Product was successfully created",
+                product.Adapt<CreateProductCommandResponse>()
+            );
     }
 }

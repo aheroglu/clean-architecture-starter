@@ -14,19 +14,15 @@ public sealed class DeleteUserCommandHandler(
         AppUser? user = await userManager
             .FindByIdAsync(request.Id);
 
-        if (user is null) return new(null, new List<string> { "User not found!" }, null);
+        if (user is null) return Result<DeleteUserCommandResponse>.Failure("User not found!");
 
         var result = await userManager
              .DeleteAsync(user);
 
-        if (result.Errors.Any()) return new(
-          null,
-          result.Errors.Select(p => p.Description).ToList(),
-          null);
+        if (result.Errors.Any()) return Result<DeleteUserCommandResponse>.Failure(result.Errors.Select(p => p.Description).ToList());
 
-        return new(
+        return Result<DeleteUserCommandResponse>.Success(
             "User was successfully deleted",
-            null,
             user.Adapt<DeleteUserCommandResponse>());
     }
 }

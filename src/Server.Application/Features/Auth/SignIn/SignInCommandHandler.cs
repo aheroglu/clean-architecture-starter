@@ -18,18 +18,17 @@ public sealed class SignInCommandHandler(
             .Users
             .FirstOrDefaultAsync(p => p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail, cancellationToken);
 
-        if (user is null) return new(null, new List<string> { "User not found!" }, null);
+        if (user is null) return Result<SignInCommandResponse>.Failure("User not found!");
 
         bool IsPasswordCorrect = await userManager
             .CheckPasswordAsync(user, request.Password);
 
-        if (!IsPasswordCorrect) return new(null, new List<string> { "Incorrect password!" }, null);
+        if (!IsPasswordCorrect) return Result<SignInCommandResponse>.Failure("Incorrect password!");
 
         string token = jwtProvider.GenerateToken(user);
 
-        return new(
+        return Result<SignInCommandResponse>.Success(
             token,
-            null,
             user.Adapt<SignInCommandResponse>());
     }
 }

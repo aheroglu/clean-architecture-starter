@@ -14,22 +14,15 @@ public sealed class DeleteRoleCommandHandler(
         AppRole? role = await roleManager
             .FindByIdAsync(request.Id);
 
-        if (role is null) return new(
-            null,
-            new List<string> { "Role not found!" },
-            null);
+        if (role is null) return Result<DeleteRoleCommandResponse>.Failure("Role not found!");
 
         var result = await roleManager
             .DeleteAsync(role);
 
-        if (result.Errors.Any()) return new(
-            null,
-            result.Errors.Select(p => p.Description).ToList(),
-            null);
+        if (result.Errors.Any()) return Result<DeleteRoleCommandResponse>.Failure(result.Errors.Select(p => p.Description).ToList());
 
-        return new(
+        return Result<DeleteRoleCommandResponse>.Success(
             "Role was successfully deleted",
-            null,
             role.Adapt<DeleteRoleCommandResponse>());
     }
 }

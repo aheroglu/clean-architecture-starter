@@ -18,14 +18,14 @@ public sealed class UpdateProductCommandHandler(
         Product product = await productQueryRepository
             .GetByAsync(p => p.Id == request.Id, cancellationToken);
 
-        if (product is null) return new(null, new List<string> { "Product not found!" }, null);
+        if (product is null) return Result<UpdateProductCommandResponse>.Failure("Product not found!");
 
         if (request.Name != product.Name)
         {
             bool isNameExists = await productQueryRepository
                 .IsProductExistsAsync(request.Name, cancellationToken);
 
-            if (isNameExists) return new(null, new List<string> { "Product name already exists!" }, null);
+            if (isNameExists) return Result<UpdateProductCommandResponse>.Failure("Product name already exists!");
         }
 
         mapper.Map(request, product);
@@ -36,9 +36,8 @@ public sealed class UpdateProductCommandHandler(
         await unitOfWork
             .SaveChangesAsync(cancellationToken);
 
-        return new(
+        return Result<UpdateProductCommandResponse>.Success(
             "Product was successfully updated",
-            null,
             product.Adapt<UpdateProductCommandResponse>());
     }
 }

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server.WebAPI", "src\Server
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server.Presentation", "src\Server.Presentation\Server.Presentation.csproj", "{EEA316B4-8AD0-4430-B660-E8282DF343BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "test\Server.Tests\Server.Tests.csproj", "{20843A85-6C74-434C-B4B1-52969E902443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server.Tests", "test\Server.Tests\Server.Tests.csproj", "{20843A85-6C74-434C-B4B1-52969E902443}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
