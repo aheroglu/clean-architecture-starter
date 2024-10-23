@@ -2,13 +2,14 @@
   Clean Architecture Starter Template
 </h1>
 
-
 <p align="center">
-  <img src="https://socialify.git.ci/aheroglu/clean-architecture-starter/image?description=1&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Solid&amp;stargazers=1&amp;theme=Auto"
+  <img src="https://socialify.git.ci/aheroglu/clean-architecture-starter/image?description=1&language=1&name=1&owner=1&pattern=Solid&stargazers=1&theme=Auto"
     alt="project-image">
 </p>
 
-## This is an starter template for easily start to develop your projects.
+<h2 align="center">
+  This is an starter template for easily start to develop your projects.
+</h2>
 
 ## Table Of Contents
 
@@ -33,7 +34,6 @@ The project currently uses .NET version 8.
 
 ## Technologies Used :gear:
 - .NET 8
-- Angular
 - Entity Framework Core
 - Redis Cache
 - MediatR
@@ -71,8 +71,8 @@ This project follows the Clean Architecture principles, ensuring a strict separa
 ### Infrastructure Layer
 - Context (IdentityDbContext and UnitOfWork Implementation)
 - Repositories (Repository classes implementing Domain repositories)
-- Services (JWT implementation)
-- Options (JWT Configuration: JwtOptions, JwtSetupOptions)
+- Services (JWT implementation, Cache implementation)
+- Options (JwtOptions, JwtSetupOptions, CacheOptions)
 - Redis (Cache logic)
 
 ### Presentation Layer
@@ -93,22 +93,22 @@ This project follows the Clean Architecture principles, ensuring a strict separa
 
 ## Setup :gear:
 1. Clone the repository:
-```csharp
+```powershell
 git clone https://github.com/aheroglu/clean-architecture-starter.git
 ```
 
 2. Install the necessary NuGet dependencies:
-```csharp
+```powershell
 dotnet restore
 ```
 
 3. Apply the database migrations:
-```csharp
+```powershell
 dotnet ef database update
 ```
 
 4. Run the project:
-```csharp
+```powershell
 dotnet run
 ```
 
