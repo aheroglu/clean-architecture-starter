@@ -1,47 +1,23 @@
-﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Server.Application.Services;
-using Server.Infrastructure.Options.Cache;
-using StackExchange.Redis;
 
 namespace Server.Infrastructure.Services;
 
-public sealed class CacheService : ICacheService
+public sealed class CacheService(
+    IMemoryCache memoryCache) : ICacheService
 {
-    private readonly ConnectionMultiplexer redisConnection;
-    private readonly IDatabase database;
-    private readonly CacheOptions settings;
-
-    public CacheService(IOptions<CacheOptions> redisOptions)
+    public void Delete<T>(string key)
     {
-        settings = redisOptions
-            .Value;
-
-        var opt = ConfigurationOptions
-            .Parse(settings.ConnectionString);
-
-        redisConnection = ConnectionMultiplexer
-            .Connect(opt);
-
-        database = redisConnection
-            .GetDatabase();
+        memoryCache.Remove(key);
     }
 
-    public async Task<T> GetAsync<T>(string key)
+    public T? Get<T>(string key)
     {
-        var values = await database
-            .StringGetAsync(key);
-
-        if (values.HasValue) return JsonConvert.DeserializeObject<T>(values!)!;
-
-        return default!;
+        return memoryCache.TryGetValue(key, out T? value) ? value : default;
     }
 
-    public async Task SetAsync<T>(string key, T value, DateTime? timeout = null)
+    public void Set<T>(string key, T value, TimeSpan expiration)
     {
-        TimeSpan expiry = timeout!.Value - DateTime.Now;
-
-        await database
-            .StringSetAsync(key, JsonConvert.SerializeObject(value), expiry);
+        memoryCache.Set(key, value, expiration);
     }
 }

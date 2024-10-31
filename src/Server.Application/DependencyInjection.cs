@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Mapster;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Application.Behaviours;
 
@@ -15,6 +14,10 @@ public static class DependencyInjection
         services
             .AddMapster();
 
+        TypeAdapterConfig
+            .GlobalSettings
+            .Scan(assembly);
+
         services
             .AddMediatR(configuration =>
                 configuration
@@ -23,9 +26,6 @@ public static class DependencyInjection
 
         services
             .AddValidatorsFromAssembly(assembly);
-
-        services
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>));
 
         return services;
     }

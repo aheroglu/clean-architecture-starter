@@ -7,6 +7,11 @@ public sealed record Result<T>(
 {
     public bool IsSuccess => ErrorMessages == null || !ErrorMessages.Any();
 
+    public static Result<T> Success(T data)
+    {
+        return new Result<T>(null, null, data);
+    }
+
     public static Result<T> Success(string successMessage)
     {
         return new Result<T>(successMessage, null, default);

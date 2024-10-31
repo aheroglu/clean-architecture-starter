@@ -2,6 +2,7 @@
 
 public interface ICacheService
 {
-    Task<T> GetAsync<T>(string key);
-    Task SetAsync<T>(string key, T value, DateTime? timeout = null);
+    T? Get<T>(string key);
+    void Set<T>(string key, T value, TimeSpan expiration);
+    void Delete<T>(string key);
 }
