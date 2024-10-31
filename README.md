@@ -21,13 +21,12 @@
   - [Layers :card_index_dividers:](#layers)
   - [Packages :package:](#packages)
   - [Setup :gear:](#setup)
-  - [Redis Cache :file_cabinet:](#redis-cache)
   - [Dummy Data :clown_face:](#dummy-data)
   - [Testing :heavy_check_mark:](#testing)
   - [Development :rocket:](#development)
 
-## Give a start! :star:
-Do you using or like this project? Please give a start for supporting me!
+## Give a star! :star:
+Do you using or like this project? Please give a star for supporting me!
 
 ## Versions :package:
 The project currently uses .NET version 8.
@@ -35,7 +34,6 @@ The project currently uses .NET version 8.
 ## Technologies Used :gear:
 - .NET 8
 - Entity Framework Core
-- Redis Cache
 - MediatR
 - FluentValidation
 - Mapster
@@ -72,8 +70,7 @@ This project follows the Clean Architecture principles, ensuring a strict separa
 - Context (IdentityDbContext and UnitOfWork Implementation)
 - Repositories (Repository classes implementing Domain repositories)
 - Services (JWT implementation, Cache implementation)
-- Options (JwtOptions, JwtSetupOptions, CacheOptions)
-- Redis (Cache logic)
+- Options (JwtOptions, JwtSetupOptions)
 
 ### Presentation Layer
 - Base API Controller
@@ -86,7 +83,6 @@ This project follows the Clean Architecture principles, ensuring a strict separa
 - MediatR
 - FluentValidation
 - AutoMapper
-- StackExchange.Redis
 - xUnit
 - Moq
 - Bogus
@@ -112,19 +108,6 @@ dotnet ef database update
 dotnet run
 ```
 
-## Redis Cache :file_cabinet:
-
-![Application Layers](https://resmim.net/cdn/2024/09/21/mowZ0j.png)
-
-The project is integrated with Redis Cache. Add Redis configuration to the appsettings.json file:
-```json
-"CacheOptions": {
-    "ConnectionString": "localhost,abortConnect=false",
-    "InstanceName": "Redis_Server"
-}
-```
-Redis is configured using the CacheService class, which implements the ICacheService interface to handle caching.
-
 ## Dummy Data :clown_face:
 The Bogus library is used to generate dummy data through the Helper class. The application will populate the database with random data when it starts in development mode.
 
@@ -144,5 +127,6 @@ dotnet test
 
 ## Development :rocket:
 You can continue developing the project by following the layered architecture. For new features, you can add CQRS handlers to the Application layer and define any necessary services in the Infrastructure layer.
+
 
 ![Application Layers](https://resmim.net/cdn/2024/09/21/mowfJn.png)
