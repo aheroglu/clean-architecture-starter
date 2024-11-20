@@ -1,19 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />
 	</ItemGroup>
-
 	<ItemGroup>
-	  <ProjectReference Include="..\Server.Application\Server.Application.csproj" />
+		<ProjectReference Include="..\Server.Application\Server.Application.csproj" />
 	</ItemGroup>
-
 </Project>

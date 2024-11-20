@@ -1,5 +1,4 @@
-﻿using Mapster;
-using MapsterMapper;
+﻿using MapsterMapper;
 using MediatR;
 using Server.Application.Common;
 using Server.Application.Services;
@@ -13,7 +12,7 @@ public sealed class GetAllProductsQueryHandler(
     IMapper mapper,
     ICacheService cacheService) : IRequestHandler<GetAllProductsQuery, Result<List<GetAllProductsQueryResponse>>>
 {
-    private static string key = "products";
+    private static string key = "getallproducts";
     private static TimeSpan expiration = TimeSpan.FromMinutes(10);
 
     public async Task<Result<List<GetAllProductsQueryResponse>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
@@ -34,6 +33,6 @@ public sealed class GetAllProductsQueryHandler(
         return new(
             null,
             null,
-            products.Adapt<List<GetAllProductsQueryResponse>>());
+            products);
     }
 }

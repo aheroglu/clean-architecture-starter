@@ -5,6 +5,7 @@ using Scrutor;
 using Server.Domain.Entities;
 using Server.Domain.Repositories;
 using Server.Infrastructure.Context;
+using Server.Infrastructure.Options.Email;
 using Server.Infrastructure.Options.Jwt;
 
 namespace Server.Infrastructure;
@@ -31,6 +32,9 @@ public static class DependencyInjection
 
         services
             .ConfigureOptions<JwtSetupOptions>();
+
+        services
+            .Configure<EmailOptions>(configuration.GetSection("EmailSettings"));
 
         services
             .AddAuthentication()

@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Server.Application.Common;
+using Server.Application.Services;
 using Server.Domain.Entities;
 using Server.Domain.Repositories;
 
@@ -9,7 +10,8 @@ namespace Server.Application.Features.Products.DeleteProductById;
 public sealed class DeleteProductByIdCommandHandler(
     ICommandRepository<Product> commandRepository,
     IQueryRepository<Product> queryRepository,
-    IUnitOfWork unitOfWork) : IRequestHandler<DeleteProductByIdCommand, Result<DeleteProductByIdCommandResponse>>
+    IUnitOfWork unitOfWork,
+    ICacheService cacheService) : IRequestHandler<DeleteProductByIdCommand, Result<DeleteProductByIdCommandResponse>>
 {
     public async Task<Result<DeleteProductByIdCommandResponse>> Handle(DeleteProductByIdCommand request, CancellationToken cancellationToken)
     {
@@ -23,6 +25,12 @@ public sealed class DeleteProductByIdCommandHandler(
 
         await unitOfWork
             .SaveChangesAsync(cancellationToken);
+
+        cacheService
+            .Remove("getallproducts");
+
+        cacheService
+            .Remove("product_" + request.Id);
 
         return new(
             "Product was successfully deleted",

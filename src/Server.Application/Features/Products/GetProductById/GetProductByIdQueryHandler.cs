@@ -34,9 +34,7 @@ public sealed class GetProductByIdQueryHandler(
         cacheService
             .Set(key, product, expiration);
 
-        return new(
-            null,
-            null,
-            product);
+        return Result<GetProductByIdQueryResponse>
+            .Success(product);
     }
 }

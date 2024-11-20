@@ -6,7 +6,7 @@ namespace Server.Infrastructure.Services;
 public sealed class CacheService(
     IMemoryCache memoryCache) : ICacheService
 {
-    public void Delete<T>(string key)
+    public void Remove(string key)
     {
         memoryCache.Remove(key);
     }

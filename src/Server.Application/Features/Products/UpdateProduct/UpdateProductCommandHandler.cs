@@ -2,6 +2,7 @@
 using MapsterMapper;
 using MediatR;
 using Server.Application.Common;
+using Server.Application.Services;
 using Server.Domain.Entities;
 using Server.Domain.Repositories;
 
@@ -11,7 +12,8 @@ public sealed class UpdateProductCommandHandler(
     IProductCommandRepository productCommandRepository,
     IProductQueryRepository productQueryRepository,
     IUnitOfWork unitOfWork,
-    IMapper mapper) : IRequestHandler<UpdateProductCommand, Result<UpdateProductCommandResponse>>
+    IMapper mapper,
+    ICacheService cacheService) : IRequestHandler<UpdateProductCommand, Result<UpdateProductCommandResponse>>
 {
     public async Task<Result<UpdateProductCommandResponse>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
@@ -35,6 +37,12 @@ public sealed class UpdateProductCommandHandler(
 
         await unitOfWork
             .SaveChangesAsync(cancellationToken);
+
+        cacheService
+           .Remove("getallproducts");
+
+        cacheService
+            .Remove("product_" + request.Id);
 
         return Result<UpdateProductCommandResponse>.Success(
             "Product was successfully updated",
