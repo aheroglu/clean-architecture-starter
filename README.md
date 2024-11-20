@@ -8,48 +8,70 @@
 </p>
 
 <h2 align="center">
-  This is an starter template for easily start to develop your projects.
+  This is a starter template for easily starting to develop your projects.
 </h2>
 
 ## Table Of Contents
 
 - [Clean Architecture](#clean-architecture)    
-  - [Give a start! :star:](#give-a-star-star)
+  - [Give a star! :star:](#give-a-star-star)
   - [Versions :package:](#versions)
   - [Technologies Used :gear:](#technologies-used)
   - [Architecture :building_construction:](#architecture)
   - [Layers :card_index_dividers:](#layers)
   - [Packages :package:](#packages)
   - [Setup :gear:](#setup)
+  - [Email Configuration :email:](#email-configuration)
   - [Dummy Data :clown_face:](#dummy-data)
   - [Testing :heavy_check_mark:](#testing)
   - [Development :rocket:](#development)
 
 ## Give a star! :star:
-Do you using or like this project? Please give a star for supporting me!
+Are you using or liking this project? Please give a star to support me!
 
 ## Versions :package:
-The project currently uses .NET version 8.
+The project currently uses .NET version 9.
 
 ## Technologies Used :gear:
-- .NET 8
+- .NET 9
 - Entity Framework Core
 - MediatR
 - FluentValidation
 - Mapster
-- Bogus (For dummy datas)
+- Bogus (For dummy data)
 - xUnit (Testing)
+- MailKit (For email functionality)
 
 ## Architecture :building_construction:
 
 This project follows the Clean Architecture principles, ensuring a strict separation of concerns between different layers. The aim is to provide a maintainable and scalable structure adhering to SOLID principles.
 
-### Clean Architecture Layes
-- <b>Domain</b>: Contains business rules and entities.
-- <b>Application</b>: Contains application logic, services, CQRS, and validations.
-- <b>Infrastructure</b>: Manages database connections, external services, and other infrastructure concerns.
-- <b>Presentation</b>: Handles API and user interface logic (Controllers).
-- <b>WebAPI</b>: Orchestrates the presentation layer of the application.
+### Clean Architecture Layers
+- **Domain**: Contains business rules and entities.
+- **Application**: Contains application logic, services, CQRS, and validations.
+- **Infrastructure**: Manages database connections, external services, and other infrastructure concerns.
+- **Presentation**: Handles API and user interface logic (Controllers).
+- **WebAPI**: Orchestrates the presentation layer of the application.
+
+---
+
+## Email Configuration :email:
+
+This project includes email-sending functionality using the **IEmailService** interface and the **MailKit** library. To enable email sending, you need to configure your `appsettings.json` file with your email settings.
+
+### Step 1: Update `appsettings.json`
+Add the following configuration to your `appsettings.json` file and customize the values according to your email provider:
+
+```json
+"EmailSettings": {
+  "SmtpServer": "smtp.gmail.com",
+  "SmtpPort": 587,
+  "SenderName": "Your Name",
+  "SenderEmail": "your-email@example.com",
+  "Username": "your-email@example.com",
+  "Password": "your-email-password"
+}
+```
 
 ## Layers :card_index_dividers:
 
@@ -64,13 +86,13 @@ This project follows the Clean Architecture principles, ensuring a strict separa
 - Features (CQRS, Handlers using MediatR)
 - Behaviors (Custom Validation Behavior with MediatR)
 - Common (Generic Result Class)
-- Services (IJwtProvider Interface)
+- Services (IJwtProvider, ICacheService, IEmailService, IFileService Interfaces)
 
 ### Infrastructure Layer
 - Context (IdentityDbContext and UnitOfWork Implementation)
 - Repositories (Repository classes implementing Domain repositories)
-- Services (JWT implementation, Cache implementation)
-- Options (JwtOptions, JwtSetupOptions)
+- Services (JWT, File Service, Email implementations)
+- Options (JwtOptions, JwtSetupOptions, EmailOptions)
 
 ### Presentation Layer
 - Base API Controller
@@ -86,6 +108,7 @@ This project follows the Clean Architecture principles, ensuring a strict separa
 - xUnit
 - Moq
 - Bogus
+- MailKit
 
 ## Setup :gear:
 1. Clone the repository:
